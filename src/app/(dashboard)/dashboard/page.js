@@ -162,7 +162,7 @@ function NotesTable({ activeTab, setActiveTab }) {
               <SortableHeader label="Date" sortKey="date" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-5 pb-3" />
               <SortableHeader label="Stock" sortKey="stock" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3" />
               <SortableHeader label="Analyst" sortKey="analyst" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3" />
-              <SortableHeader label="Note Type" sortKey="noteType" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3" />
+              <SortableHeader label={<>Note<br/>Type</>} sortKey="noteType" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3" />
               <SortableHeader label="H/N" sortKey="hn" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3" />
               <SortableHeader label="Reason" sortKey="reason" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3" />
               <th className="px-3 pb-3 font-medium">Details</th>

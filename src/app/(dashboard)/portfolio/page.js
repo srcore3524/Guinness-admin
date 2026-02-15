@@ -79,8 +79,8 @@ function Indicator({ type }) {
   };
   if (src[type]) {
     return (
-      <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${styles[type]}`}>
-        <Image src={src[type]} alt={type} width={10} height={10} />
+      <div className={`flex h-6 w-6 items-center justify-center rounded-md ${styles[type]}`}>
+        <Image src={src[type]} alt={type} width={8} height={8} />
       </div>
     );
   }
@@ -189,18 +189,18 @@ function DashboardTable({ sorted, sortKey, sortDir, requestSort, toggleStar }) {
       <thead className="sticky top-0 bg-white">
         <tr className="border-b border-[#efeff0] text-[12px] text-gn-gray">
           <th className="w-8 px-3 pb-3 pt-3" />
-          <SortableHeader label="Global Equity Income" sortKey="name" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
+          <SortableHeader label={<>Global Equity<br/>Income</>} sortKey="name" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
           <SortableHeader label="Sector" sortKey="sector" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
           <SortableHeader label="Purchase" sortKey="purchase" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
           <th className="px-3 pb-3 pt-3 font-medium">Analyst</th>
           <th className="px-3 pb-3 pt-3 font-medium">Model</th>
-          <SortableHeader label="Initial Review" sortKey="initial" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
-          <SortableHeader label="Invest. Thesis" sortKey="thesis" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
-          <SortableHeader label="ESG Review" sortKey="esg" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
+          <SortableHeader label={<>Initial<br/>Review</>} sortKey="initial" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
+          <SortableHeader label={<>Invest.<br/>Thesis</>} sortKey="thesis" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
+          <SortableHeader label={<>ESG<br/>Review</>} sortKey="esg" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
           <SortableHeader label="Checklist" sortKey="checklist" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
-          <SortableHeader label="Company Meeting" sortKey="meeting" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
-          <SortableHeader label="Spoke to MGT" sortKey="spokeTo" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
-          <SortableHeader label="Spoke t MGT" sortKey="spokeT" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
+          <SortableHeader label={<>Company<br/>Meeting</>} sortKey="meeting" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
+          <SortableHeader label={<>Spoke to<br/>MGT</>} sortKey="spokeTo" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
+          <SortableHeader label={<>Spoke t<br/>MGT</>} sortKey="spokeT" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
         </tr>
       </thead>
       <tbody>
@@ -243,17 +243,17 @@ function EarningsTable({ sorted, sortKey, sortDir, requestSort, toggleStar }) {
       <thead className="sticky top-0 bg-white">
         <tr className="border-b border-[#efeff0] text-[12px] text-gn-gray">
           <th className="w-8 px-3 pb-3 pt-3" />
-          <SortableHeader label="Global Equity Income" sortKey="name" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
+          <SortableHeader label={<>Global Equity<br/>Income</>} sortKey="name" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
           <SortableHeader label="Sector" sortKey="sector" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
-          <SortableHeader label="Print Date" sortKey="printDate" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
+          <SortableHeader label={<>Print<br/>Date</>} sortKey="printDate" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
           <th className="px-3 pb-3 pt-3 font-medium">Analyst</th>
           <th className="px-3 pb-3 pt-3 font-medium">Earnings</th>
           <SortableHeader label="Period" sortKey="period" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
-          <th className="px-3 pb-3 pt-3 font-medium">Result</th>
-          <th className="px-3 pb-3 pt-3 font-medium">Guidance</th>
-          <th className="px-3 pb-3 pt-3 font-medium">Market Reaction</th>
-          <th className="px-3 pb-3 pt-3 font-medium">Guiness Reaction</th>
-          <SortableHeader label="Earnings Headline" sortKey="headline" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
+          <th className="px-3 pb-3 pt-3 text-center font-medium">Result</th>
+          <th className="px-3 pb-3 pt-3 text-center font-medium">Guidance</th>
+          <th className="px-3 pb-3 pt-3 text-center font-medium">Market<br/>Reaction</th>
+          <th className="px-3 pb-3 pt-3 text-center font-medium">Guiness<br/>Reaction</th>
+          <SortableHeader label={<>Earnings<br/>Headline</>} sortKey="headline" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
         </tr>
       </thead>
       <tbody>
@@ -281,7 +281,9 @@ function EarningsTable({ sorted, sortKey, sortDir, requestSort, toggleStar }) {
             <td className="px-3 py-3 text-gn-text">{row.period}</td>
             {INDICATOR_FIELDS.map((field, colIdx) => (
               <td key={field} className="px-3 py-3">
-                <Indicator type={seededIndicator(rowIdx, colIdx)} />
+                <div className="flex justify-center">
+                  <Indicator type={seededIndicator(rowIdx, colIdx)} />
+                </div>
               </td>
             ))}
             <td className="px-3 py-3 text-gn-gray">{row.headline}</td>

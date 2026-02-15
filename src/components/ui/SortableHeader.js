@@ -34,7 +34,7 @@ export default function SortableHeader({ label, sortKey, activeSortKey, sortDir,
 
   return (
     <th
-      className={`cursor-pointer select-none whitespace-nowrap font-medium ${className}`}
+      className={`cursor-pointer select-none font-medium ${className}`}
       onClick={() => onSort(sortKey)}
     >
       <div className="flex items-center gap-1">
