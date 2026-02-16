@@ -15,29 +15,46 @@ import {
   AlignLeft,
 } from "lucide-react";
 import SortableHeader, { useSortableData } from "@/components/ui/SortableHeader";
+import { INITIAL_NOTES } from "./data";
 
-const SALES_NOTES = [
-  { id: 0, date: "20.03.25", title: "Diageo Write-up", summary: "This project explores data-driven methods to visualize and interpret thesis results, providing insights through dynamic charts and visual storytelling." },
-  { id: 1, date: "20.03.25", title: "Project 2 (by Tom Sherwood)", summary: "This project explores data-driven methods to visualize and interpret thesis results, providing insights through dynamic charts and visual storytelling." },
-  { id: 2, date: "20.03.25", title: "Project 3 (by Tom Sherwood)", summary: "This project explores data-driven methods to visualize and interpret thesis results, providing insights through dynamic charts and visual storytelling." },
-  { id: 3, date: "20.03.25", title: "Project 4 (by Tom Sherwood)", summary: "This project explores data-driven methods to visualize and interpret thesis results, providing insights through dynamic charts and visual storytelling." },
-  { id: 4, date: "20.03.25", title: "Project 5 (by Tom Sherwood)", summary: "This project explores data-driven methods to visualize and interpret thesis results, providing insights through dynamic charts and visual storytelling." },
-  { id: 5, date: "20.03.25", title: "Project 6 (by Tom Sherwood)", summary: "This project explores data-driven methods to visualize and interpret thesis results, providing insights through dynamic charts and visual storytelling." },
-  { id: 6, date: "20.03.25", title: "Project 7 (by Tom Sherwood)", summary: "This project explores data-driven methods to visualize and interpret thesis results, providing insights through dynamic charts and visual storytelling." },
-  { id: 7, date: "20.03.25", title: "Diageo Write-up", summary: "This project explores data-driven methods to visualize and interpret thesis results, providing insights through dynamic charts and visual storytelling." },
-  { id: 8, date: "20.03.25", title: "Project 2 (by Tom Sherwood)", summary: "This project explores data-driven methods to visualize and interpret thesis results, providing insights through dynamic charts and visual storytelling." },
-];
+function formatDate(dateStr) {
+  if (!dateStr) {
+    const now = new Date();
+    const d = String(now.getDate()).padStart(2, "0");
+    const m = String(now.getMonth() + 1).padStart(2, "0");
+    const y = String(now.getFullYear()).slice(-2);
+    return `${d}.${m}.${y}`;
+  }
+  const date = new Date(dateStr);
+  const d = String(date.getDate()).padStart(2, "0");
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const y = String(date.getFullYear()).slice(-2);
+  return `${d}.${m}.${y}`;
+}
 
 export default function SalesViewPage() {
+  const [notes, setNotes] = useState(INITIAL_NOTES);
   const [searchQuery, setSearchQuery] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const { sorted, sortKey, sortDir, requestSort } = useSortableData(SALES_NOTES);
+  const { sorted, sortKey, sortDir, requestSort } = useSortableData(notes);
 
   const filtered = sorted.filter(
     (note) =>
       note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       note.summary.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleCreateNote = (noteData) => {
+    const newNote = {
+      id: Date.now(),
+      date: formatDate(noteData.dueDate),
+      title: noteData.title,
+      summary: noteData.summary,
+      link: noteData.link,
+    };
+    setNotes((prev) => [newNote, ...prev]);
+    setShowModal(false);
+  };
 
   return (
     <div className="flex flex-1 flex-col">
@@ -94,9 +111,15 @@ export default function SalesViewPage() {
                   <td className="px-4 py-3 text-[14px] text-gn-text">{note.title}</td>
                   <td className="px-4 py-3 text-[14px] leading-[22px] text-gn-gray">{note.summary}</td>
                   <td className="px-4 py-3 text-center">
-                    <button className="text-gn-gray hover:text-gn-primary">
-                      <ExternalLink size={16} />
-                    </button>
+                    {note.link ? (
+                      <a href={note.link} target="_blank" rel="noopener noreferrer" className="text-gn-gray hover:text-gn-primary">
+                        <ExternalLink size={16} />
+                      </a>
+                    ) : (
+                      <button className="text-gn-gray hover:text-gn-primary">
+                        <ExternalLink size={16} />
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -105,16 +128,26 @@ export default function SalesViewPage() {
         </div>
       </div>
 
-      {showModal && <CreateNoteModal onClose={() => setShowModal(false)} />}
+      {showModal && (
+        <CreateNoteModal
+          onClose={() => setShowModal(false)}
+          onCreate={handleCreateNote}
+        />
+      )}
     </div>
   );
 }
 
-function CreateNoteModal({ onClose }) {
+function CreateNoteModal({ onClose, onCreate }) {
   const [dueDate, setDueDate] = useState("");
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [link, setLink] = useState("https://guinnessam.sharepoint.com/sites/");
+
+  const handleSubmit = () => {
+    if (!title.trim()) return;
+    onCreate({ dueDate, title, summary, link });
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={onClose}>
@@ -201,7 +234,10 @@ function CreateNoteModal({ onClose }) {
           >
             Cancel
           </button>
-          <button className="h-[40px] rounded-lg bg-gn-primary px-6 text-[13px] font-medium text-white hover:bg-gn-primary-dark">
+          <button
+            onClick={handleSubmit}
+            className="h-[40px] rounded-lg bg-gn-primary px-6 text-[13px] font-medium text-white hover:bg-gn-primary-dark"
+          >
             Create Note
           </button>
         </div>
