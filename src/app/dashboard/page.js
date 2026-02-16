@@ -19,7 +19,7 @@ import {
 
 export default function DashboardPage() {
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex flex-1 flex-col rounded-lg bg-[#F2F5F9] p-5">
       <div className="mb-3 flex items-center justify-between">
         <Breadcrumb items={["Dashboard"]} />
         <button className="flex items-center gap-1.5 text-[13px] font-medium text-gn-text">
@@ -28,13 +28,13 @@ export default function DashboardPage() {
         </button>
       </div>
 
-      <div className="flex flex-1 flex-col gap-4 overflow-auto">
-        <div className="grid min-w-[900px] max-h-[380px] grid-cols-[2fr_1fr_1fr] gap-4">
+      <div className="main-scroll flex flex-1 flex-col gap-4 overflow-auto">
+        <div className="grid min-w-[900px] h-[380px] grid-cols-[2fr_1fr_1fr] grid-rows-[1fr] gap-4">
           <NotesCard title="Core Notes" data={CORE_NOTES} />
           <PriceMonitoring />
           <UpcomingDates />
         </div>
-        <div className="grid min-w-[900px] max-h-[380px] grid-cols-2 gap-4">
+        <div className="grid min-w-[900px] h-[380px] grid-cols-2 grid-rows-[1fr] gap-4">
           <NotesCard title="Non-Core Notes" data={NON_CORE_NOTES} />
           <NotesCard title="Earnings" data={EARNINGS_NOTES} />
         </div>
@@ -123,11 +123,11 @@ function PriceMonitoring() {
         <tbody>
           {sorted.map((row) => (
             <tr key={row.id} className="border-b border-[#efeff0] transition-colors hover:bg-gray-50">
-              <td className="px-4 py-2">
-                <div className="font-medium text-gn-text">{row.name}</div>
-                {row.ticker && <div className="text-[10px] text-gn-gray">{row.ticker}</div>}
+              <td className="px-4 py-1">
+                <div className="text-[12px] font-medium leading-tight text-gn-text">{row.name}</div>
+                {row.ticker && <div className="text-[9px] leading-tight text-gn-gray">{row.ticker}</div>}
               </td>
-              <td className="px-2 py-2">
+              <td className="px-2 py-1">
                 <div className="flex items-center gap-1">
                   {row.up ? (
                     <TrendingUp size={12} className="text-green-600" />
@@ -139,7 +139,7 @@ function PriceMonitoring() {
                   </span>
                 </div>
               </td>
-              <td className="px-2 py-2 font-medium text-gn-text">{row.price}</td>
+              <td className="px-2 py-1 font-medium text-gn-text">{row.price}</td>
             </tr>
           ))}
         </tbody>

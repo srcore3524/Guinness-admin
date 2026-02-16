@@ -14,11 +14,11 @@ export default function MainLayout({ children }) {
   }
 
   return (
-    <div className="flex h-screen bg-[#efefef]">
+    <div className="flex h-screen bg-[#F2F5F9]">
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Header />
-        <main className="flex flex-1 flex-col overflow-auto m-2 p-5 bg-white rounded-sm">
+        <main className="flex flex-1 flex-col overflow-auto m-2">
           {children}
         </main>
       </div>

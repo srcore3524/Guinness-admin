@@ -56,10 +56,10 @@ export default function SalesViewPage() {
   };
 
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex flex-1 flex-col rounded-lg bg-white p-5">
       <Breadcrumb items={["Sales View"]} />
 
-      <div className="flex-1 rounded-lg border border-[#efeff0] bg-white">
+      <div className="flex-1">
         <div className="flex items-center justify-between px-5 pt-4 pb-4">
           <div className="flex items-center gap-1.5">
             <FileText size={18} className="text-gn-text" />
