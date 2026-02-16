@@ -3,8 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import {
-  Home,
-  ChevronRight,
   ChevronDown,
   FileText,
   TrendingUp,
@@ -12,6 +10,7 @@ import {
   TrendingDown,
   Triangle,
 } from "lucide-react";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 import SortableHeader, { useSortableData } from "@/components/ui/SortableHeader";
 import {
   CORE_NOTES, NON_CORE_NOTES, EARNINGS_NOTES,
@@ -22,11 +21,7 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-1 flex-col">
       <div className="mb-3 flex items-center justify-between">
-        <div className="flex items-center gap-1 text-[12px] text-gn-gray">
-          <Home size={14} />
-          <ChevronRight size={14} />
-          <span className="text-gn-text">Dashboard</span>
-        </div>
+        <Breadcrumb items={["Dashboard"]} />
         <button className="flex items-center gap-1.5 text-[13px] font-medium text-gn-text">
           Portfolio: All
           <ChevronDown size={14} className="text-gn-primary" />

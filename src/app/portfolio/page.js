@@ -3,8 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import {
-  Home,
-  ChevronRight,
   Star,
   ExternalLink,
   Settings2,
@@ -12,11 +10,37 @@ import {
   Settings,
   CalendarDays,
 } from "lucide-react";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 import SortableHeader, { useSortableData } from "@/components/ui/SortableHeader";
 import {
   MAIN_TABS, SUB_TABS, DATE_STYLES, DASHBOARD_DATA,
-  INDICATORS, EARNINGS_DATA, DATE_FIELDS, INDICATOR_FIELDS,
+  INDICATORS, EARNINGS_DATA, DASHBOARD_DATE_FIELDS,
+  PRIORITIES_DATE_FIELDS, INDICATOR_FIELDS,
 } from "./data";
+
+const DASHBOARD_HEADERS = {
+  thesis1: "Thesis",
+  thesis2: "Thesis",
+  thesis3: "Thesis",
+  esg: <>ESG<br/>Review</>,
+  checklist: "Checklist",
+  ggiMeeting: <>GGI<br/>Meeting</>,
+  earnings: "Earnings",
+  earningsQ1: <>Earnings<br/>(-1Q)</>,
+  earningsQ2: <>Earnings<br/>(-2Q)</>,
+  earningsQ3: <>Earnings<br/>(-3Q)</>,
+};
+
+const PRIORITIES_HEADERS = {
+  initialReview: <>Initial<br/>Review</>,
+  investThesis: <>Invest.<br/>Thesis</>,
+  esg: <>ESG<br/>Review</>,
+  checklist: "Checklist",
+  companyMeeting: <>Company<br/>Meeting</>,
+  spokeToMgt: <>Spoke to<br/>MGT</>,
+  teamDiscussion: <>Team<br/>Discussion</>,
+  quarterlyEarning: <>Quarterly<br/>Earning</>,
+};
 
 function seededStyle(rowIdx, colIdx) {
   return DATE_STYLES[(rowIdx * 7 + colIdx * 3) % DATE_STYLES.length];
@@ -61,17 +85,12 @@ export default function PortfolioPage() {
     setCurrentData((prev) => prev.map((row) => row.id === id ? { ...row, star: !row.star } : row));
   };
 
+  const dateFields = mainTab === "Priorities" ? PRIORITIES_DATE_FIELDS : DASHBOARD_DATE_FIELDS;
+  const headers = mainTab === "Priorities" ? PRIORITIES_HEADERS : DASHBOARD_HEADERS;
+
   return (
     <div className="flex flex-1 flex-col">
-      <div className="mb-4 flex items-center gap-1 text-[12px] text-gn-gray">
-        <Home size={14} />
-        <ChevronRight size={14} />
-        <span>Portfolio View</span>
-        <ChevronRight size={14} />
-        <span>Dashboard</span>
-        <ChevronRight size={14} />
-        <span className="text-gn-text">Portfolio</span>
-      </div>
+      <Breadcrumb items={["Portfolio View", mainTab, subTab]} />
 
       <div className="mb-4 flex items-center justify-between">
         <div className="flex gap-6 border-b border-[#efeff0]">
@@ -136,14 +155,14 @@ export default function PortfolioPage() {
         {mainTab === "Earnings" ? (
           <EarningsTable sorted={sorted} sortKey={sortKey} sortDir={sortDir} requestSort={requestSort} toggleStar={toggleStar} />
         ) : (
-          <DashboardTable sorted={sorted} sortKey={sortKey} sortDir={sortDir} requestSort={requestSort} toggleStar={toggleStar} />
+          <PortfolioTable sorted={sorted} sortKey={sortKey} sortDir={sortDir} requestSort={requestSort} toggleStar={toggleStar} dateFields={dateFields} headers={headers} />
         )}
       </div>
     </div>
   );
 }
 
-function DashboardTable({ sorted, sortKey, sortDir, requestSort, toggleStar }) {
+function PortfolioTable({ sorted, sortKey, sortDir, requestSort, toggleStar, dateFields, headers }) {
   return (
     <table className="w-full text-left text-[13px]">
       <thead className="sticky top-0 bg-white">
@@ -152,15 +171,11 @@ function DashboardTable({ sorted, sortKey, sortDir, requestSort, toggleStar }) {
           <SortableHeader label={<>Global Equity<br/>Income</>} sortKey="name" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
           <SortableHeader label="Sector" sortKey="sector" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
           <SortableHeader label="Purchase" sortKey="purchase" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
-          <th className="px-3 pb-3 pt-3 font-medium">Analyst</th>
+          <SortableHeader label="Analyst" sortKey="analyst" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
           <th className="px-3 pb-3 pt-3 font-medium">Model</th>
-          <SortableHeader label={<>Initial<br/>Review</>} sortKey="initial" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
-          <SortableHeader label={<>Invest.<br/>Thesis</>} sortKey="thesis" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
-          <SortableHeader label={<>ESG<br/>Review</>} sortKey="esg" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
-          <SortableHeader label="Checklist" sortKey="checklist" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
-          <SortableHeader label={<>Company<br/>Meeting</>} sortKey="meeting" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
-          <SortableHeader label={<>Spoke to<br/>MGT</>} sortKey="spokeTo" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
-          <SortableHeader label={<>Spoke t<br/>MGT</>} sortKey="spokeT" activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
+          {dateFields.map((field) => (
+            <SortableHeader key={field} label={headers[field]} sortKey={field} activeSortKey={sortKey} sortDir={sortDir} onSort={requestSort} className="px-3 pb-3 pt-3" />
+          ))}
         </tr>
       </thead>
       <tbody>
@@ -174,7 +189,10 @@ function DashboardTable({ sorted, sortKey, sortDir, requestSort, toggleStar }) {
             <td className="px-3 py-3">
               <div className="flex items-center gap-2">
                 <Image src={row.logo} alt={row.name} width={26} height={26} className="rounded-full" />
-                <span className="font-medium text-gn-text">{row.name}</span>
+                <div>
+                  <div className="font-medium text-gn-text">{row.name}</div>
+                  <div className="text-[10px] text-gn-gray">{row.ticker}</div>
+                </div>
               </div>
             </td>
             <td className="px-3 py-3 text-gn-gray">{row.sector}</td>
@@ -185,7 +203,7 @@ function DashboardTable({ sorted, sortKey, sortDir, requestSort, toggleStar }) {
             <td className="px-3 py-3">
               <button className="text-gn-gray hover:text-gn-primary"><ExternalLink size={16} /></button>
             </td>
-            {DATE_FIELDS.map((field, colIdx) => (
+            {dateFields.map((field, colIdx) => (
               <td key={field} className="px-3 py-3">
                 <span className={`inline-block rounded-md px-3 py-1 text-[12px] font-medium ${seededStyle(rowIdx, colIdx)}`}>02/24</span>
               </td>
@@ -227,7 +245,10 @@ function EarningsTable({ sorted, sortKey, sortDir, requestSort, toggleStar }) {
             <td className="px-3 py-3">
               <div className="flex items-center gap-2">
                 <Image src={row.logo} alt={row.name} width={26} height={26} className="rounded-full" />
-                <span className="font-medium text-gn-text">{row.name}</span>
+                <div>
+                  <div className="font-medium text-gn-text">{row.name}</div>
+                  <div className="text-[10px] text-gn-gray">{row.ticker}</div>
+                </div>
               </div>
             </td>
             <td className="px-3 py-3 text-gn-gray">{row.sector}</td>

@@ -1,7 +1,18 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 
-export default function DashboardLayout({ children }) {
+const AUTH_ROUTES = ["/login", "/register", "/forgot-password"];
+
+export default function MainLayout({ children }) {
+  const pathname = usePathname();
+
+  if (AUTH_ROUTES.includes(pathname)) {
+    return children;
+  }
+
   return (
     <div className="flex h-screen bg-[#efefef]">
       <Sidebar />

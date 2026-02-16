@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import {
-  Home,
-  ChevronRight,
   Search,
   Plus,
   ExternalLink,
@@ -14,6 +12,7 @@ import {
   Link as LinkIcon,
   AlignLeft,
 } from "lucide-react";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 import SortableHeader, { useSortableData } from "@/components/ui/SortableHeader";
 import { INITIAL_NOTES } from "./data";
 
@@ -58,11 +57,7 @@ export default function SalesViewPage() {
 
   return (
     <div className="flex flex-1 flex-col">
-      <div className="mb-4 flex items-center gap-1 text-[12px] text-gn-gray">
-        <Home size={14} />
-        <ChevronRight size={14} />
-        <span className="text-gn-text">Sales View</span>
-      </div>
+      <Breadcrumb items={["Sales View"]} />
 
       <div className="flex-1 rounded-lg border border-[#efeff0] bg-white">
         <div className="flex items-center justify-between px-5 pt-4 pb-4">
