@@ -11,6 +11,7 @@ import {
   Users,
   Globe,
   CircleDollarSign,
+  Monitor,
   Info,
   Upload,
   PanelLeftClose,
@@ -21,8 +22,9 @@ const MENU_ITEMS = [
   { label: "Portfolio View", href: "/portfolio", icon: Briefcase },
   { label: "Stock View", href: "/stock", icon: ChartCandlestick },
   { label: "Analyst View", href: "/analyst", icon: ChartNoAxesCombined },
-  { label: "Team View", href: "/team", icon: Users },
-  { label: "Macro View", href: "/macro", icon: Globe },
+  { label: "Team View", href: "/team", icon: Users, soon: true },
+  { label: "Macro View", href: "/macro", icon: Globe, soon: true },
+  { label: "Notebook View", href: "/notebook", icon: Monitor, soon: true },
   { label: "Sales View", href: "/sales", icon: CircleDollarSign },
 ];
 
@@ -58,6 +60,22 @@ export default function Sidebar() {
       <nav className="flex flex-1 flex-col gap-1 px-5">
         {MENU_ITEMS.map((item) => {
           const isActive = pathname.startsWith(item.href);
+
+          if (item.soon) {
+            return (
+              <span
+                key={item.href}
+                className="flex h-9 items-center gap-2 rounded-lg px-3 text-[13px] font-medium text-gn-gray/60 cursor-default"
+              >
+                <item.icon size={18} />
+                {item.label}
+                <span className="ml-auto rounded-full bg-gn-red/10 px-2.5 py-0.5 text-[11px] font-semibold text-gn-red">
+                  Soon
+                </span>
+              </span>
+            );
+          }
+
           return (
             <Link
               key={item.href}

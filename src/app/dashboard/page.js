@@ -28,11 +28,13 @@ export default function DashboardPage() {
         </button>
       </div>
 
-      <div className="main-scroll flex flex-1 flex-col gap-4 overflow-auto">
-        <div className="grid min-w-[900px] h-[380px] grid-cols-[2fr_1fr_1fr] grid-rows-[1fr] gap-4">
+      <div className="main-scroll flex flex-1 flex-col gap-2 overflow-auto">
+        <div className="grid min-w-[900px] h-[380px] grid-cols-2 grid-rows-[1fr] gap-4">
           <NotesCard title="Core Notes" data={CORE_NOTES} />
-          <PriceMonitoring />
-          <UpcomingDates />
+          <div className="grid grid-cols-2 grid-rows-[1fr] gap-4 min-h-0">
+            <PriceMonitoring />
+            <UpcomingDates />
+          </div>
         </div>
         <div className="grid min-w-[900px] h-[380px] grid-cols-2 grid-rows-[1fr] gap-4">
           <NotesCard title="Non-Core Notes" data={NON_CORE_NOTES} />

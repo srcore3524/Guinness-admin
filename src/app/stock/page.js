@@ -25,7 +25,7 @@ import { FUND_CATEGORIES, STOCK_DETAILS, DEFAULT_DETAIL, CHART_DATA } from "./da
 export default function StockPage() {
   const [openFunds, setOpenFunds] = useState({ 0: true });
   const [selectedStock, setSelectedStock] = useState("cocacola");
-  const [chartTab, setChartTab] = useState("1Y");
+  const [chartTab, setChartTab] = useState("ALL");
   const [chartDate, setChartDate] = useState("2025-09-04");
 
   const toggleFund = (idx) => {
@@ -44,7 +44,7 @@ export default function StockPage() {
   };
 
   return (
-    <div className="flex flex-1 gap-4 overflow-hidden rounded-lg bg-[#F2F5F9] p-5">
+    <div className="flex flex-1 gap-4 overflow-hidden rounded-lg bg-[#F2F5F9] p-1">
       <StockSidebar
           openFunds={openFunds}
           toggleFund={toggleFund}
@@ -181,7 +181,7 @@ function StockDetail({ detail, chartTab, setChartTab, chartDate, setChartDate, s
       </div>
 
       <div className="flex gap-4">
-        <div className="flex flex-1 flex-col gap-4">
+        <div className="flex flex-1 flex-col gap-2">
           <CoreNotes notes={detail.coreNotes} />
           <Earnings earnings={detail.earnings} />
         </div>
