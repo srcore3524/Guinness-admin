@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -16,6 +17,7 @@ import {
   Upload,
   PanelLeftClose,
 } from "lucide-react";
+import UploadDocumentModal from "@/components/modals/UploadDocumentModal";
 
 const MENU_ITEMS = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutGrid },
@@ -30,8 +32,10 @@ const MENU_ITEMS = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const [showUploadModal, setShowUploadModal] = useState(false);
 
   return (
+    <>
     <aside className="flex h-screen w-[260px] shrink-0 flex-col border-r border-[#efeff0] bg-white">
       <div className="flex h-[60px] items-center justify-between px-5">
         <Image
@@ -47,7 +51,10 @@ export default function Sidebar() {
       </div>
 
       <div className="flex justify-center px-5">
-        <button className="flex items-center justify-center gap-2 rounded-lg bg-gn-primary px-4 py-2 text-[13px] font-medium tracking-[-0.26px] text-white hover:bg-gn-primary-dark">
+        <button
+          onClick={() => setShowUploadModal(true)}
+          className="flex items-center justify-center gap-2 rounded-lg bg-gn-primary px-4 py-2 text-[13px] font-medium tracking-[-0.26px] text-white hover:bg-gn-primary-dark"
+        >
           <Upload size={14} />
           Upload
         </button>
@@ -107,5 +114,10 @@ export default function Sidebar() {
         </Link>
       </div>
     </aside>
+
+    {showUploadModal && (
+      <UploadDocumentModal onClose={() => setShowUploadModal(false)} />
+    )}
+    </>
   );
 }
